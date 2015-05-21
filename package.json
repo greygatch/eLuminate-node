@@ -1,0 +1,18 @@
+{
+  "name": "aphrodite",
+  "version": "0.0.1",
+  "homepage": "https://github.com/coding-house-apr2015/aphrodite",
+  "author": "Chyld Medford <chyld.medford@gmail.com>",
+  "license": "BSD",
+  "engines": {
+    "node": "0.12.x"
+  },
+  "bin": {
+    "coveralls": "./node_modules/coveralls/bin/coveralls.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "lab -v -c -t 100 -L -n eslint -e test",
+    "coverage": "lab -s -r lcov | coveralls"
+  }
+}
