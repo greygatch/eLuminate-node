@@ -17,7 +17,10 @@
   },
   "dependencies": {
     "chai": "^2.3.0",
+    "coveralls": "^2.11.2",
     "joi": "^6.4.1",
-    "sinon": "^1.14.1"
+    "sinon": "^1.14.1",
+    "travis": "^0.1.1",
+    "travis-encrypt": "^1.1.1"
   }
 }
