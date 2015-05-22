@@ -12,7 +12,10 @@ var lab = exports.lab = Lab.script();
 var describe = lab.experiment;
 var expect = Chai.expect;
 var it = lab.test;
+var CP = require('child_process');
+var Path = require('path');
 var before = lab.before;
+var beforeEach = lab.beforeEach;
 var after = lab.after;
 
 var server;
@@ -22,6 +25,12 @@ describe('POST /users', function(){
     Server.init(function(err, srvr){
       if(err){ throw err; }
       server = srvr;
+      done();
+    });
+  });
+  beforeEach(function(done){
+    var db = server.app.environment.MONGO_URL.split('/')[3];
+    CP.execFile(Path.join(__dirname, '../../../../scripts/clean-db.sh'), [db], {cwd: Path.join(__dirname, '../../../../scripts')}, function(){
       done();
     });
   });
