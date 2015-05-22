@@ -22,5 +22,10 @@
     "sinon": "^1.14.1",
     "travis": "^0.1.1",
     "travis-encrypt": "^1.1.1"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "lab": "^5.9.0",
+    "sinon": "^1.14.1"
   }
 }
