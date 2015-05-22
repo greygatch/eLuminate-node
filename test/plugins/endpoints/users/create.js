@@ -34,7 +34,6 @@ describe('POST /users', function(){
       done();
     });
   });
-
   after(function(done){
     server.stop(function(){
       Mongoose.disconnect(done);
