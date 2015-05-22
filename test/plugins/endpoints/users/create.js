@@ -39,7 +39,6 @@ describe('POST /users', function(){
       Mongoose.disconnect(done);
     });
   });
-
   it('should return an existing user', function(done){
     server.inject({method: 'POST', url: '/users', credentials: {_id: 'b00000000000000000000001'}}, function(response){
       expect(response.statusCode).to.equal(200);
