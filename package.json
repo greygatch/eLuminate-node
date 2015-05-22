@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "chai": "^2.3.0",
+    "hapi-auth-jwt": "^2.1.2",
     "lab": "^5.9.0",
     "sinon": "^1.14.1"
   }
