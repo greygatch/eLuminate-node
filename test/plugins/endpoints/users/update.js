@@ -46,6 +46,12 @@ describe('PUT /users/{userId}/edit', function(){
       done();
     });
   });
+  it('should not edit if no existing profile', function(done){
+    server.inject({method: 'PUT', url: '/users/b00000000000000000000003/edit', credentials: {_id: 'b00000000000000000000099'}, payload: {avatar: 'bob.com', points: 0, username: 'theBombDotCom', createdAt: 1431541042952, firebaseId: '7'}}, function(response){
+      expect(response.statusCode).to.equal(400);
+      done();
+    });
+  });
   it('should throw a db error', function(done){
     var stub = Sinon.stub(User, 'findByIdAndUpdate').yields(new Error());
     server.inject({method: 'PUT', url: '/users/b00000000000000000000003/edit', credentials: {_id: 'b00000000000000000000003'}, payload: {avatar: 'bob.com', points: 0, username: 'theBombDotCom', createdAt: 1431541042952, firebaseId: '7'}}, function(response){

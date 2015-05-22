@@ -52,6 +52,7 @@ describe('POST /users', function(){
   it('should create a new user', function(done){
     server.inject({method: 'POST', url: '/users', credentials: {firebaseId: 99}}, function(response){
       expect(response.statusCode).to.equal(200);
+      expect(response.result.points).to.equal(0);
       done();
     });
   });
