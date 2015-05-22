@@ -1,0 +1,32 @@
+[
+  {
+    "_id": {"$oid": "b00000000000000000000001"},
+    "firebaseId": "99",
+    "email": "aaa@aaa.com",
+    "password": "ccc",
+    "username": "theDuke",
+    "avatar": "http://google.com",
+    "points": 200,
+    "createdAt": {"$date": 1436541042952}
+  },
+  {
+    "_id": {"$oid": "b00000000000000000000002"},
+    "firebaseId": "98",
+    "email": "bbb@bbb.com",
+    "password": "aaa",
+    "username": "theBigCheese",
+    "avatar": "http://cnn.com",
+    "points": 200,
+    "createdAt": {"$date": 1431541042992}
+  },
+  {
+    "_id": {"$oid": "b00000000000000000000003"},
+    "firebaseId": "99",
+    "email": "ccc@ccc.com",
+    "password": "ccc",
+    "username": "elDuderino",
+    "avatar": "http://npr.com",
+    "points": 200,
+    "createdAt": {"$date": 1431541082952}
+  }
+]

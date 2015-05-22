@@ -7,6 +7,7 @@ var Lab = require('lab');
 var Mongoose = require('mongoose');
 var Server = require('../../../../lib/server');
 var User = require('../../../../lib/models/user');
+var Sinon = require('sinon');
 
 var lab = exports.lab = Lab.script();
 var describe = lab.experiment;
@@ -20,7 +21,7 @@ var after = lab.after;
 
 var server;
 
-describe('POST /users', function(){
+describe('PUT /users/{userId}/edit', function(){
   before(function(done){
     Server.init(function(err, srvr){
       if(err){ throw err; }
@@ -34,24 +35,22 @@ describe('POST /users', function(){
       done();
     });
   });
-
   after(function(done){
     server.stop(function(){
       Mongoose.disconnect(done);
     });
   });
-
-  it('should return an existing user', function(done){
-    server.inject({method: 'POST', url: '/users', credentials: {_id: 'b00000000000000000000001'}}, function(response){
+  it('should edit an existing profile', function(done){
+    server.inject({method: 'PUT', url: '/users/b00000000000000000000003/edit', credentials: {_id: 'b00000000000000000000003'}, payload: {avatar: 'bob.com', points: 0, username: 'theBombDotCom', createdAt: 1431541042952, firebaseId: '7'}}, function(response){
       expect(response.statusCode).to.equal(200);
-      expect(response.result.length).to.equal(24);
       done();
     });
   });
-
-  it('should create a new user', function(done){
-    server.inject({method: 'POST', url: '/users', credentials: {firebaseId: 99}}, function(response){
-      expect(response.statusCode).to.equal(200);
+  it('should throw a db error', function(done){
+    var stub = Sinon.stub(User, 'findByIdAndUpdate').yields(new Error());
+    server.inject({method: 'PUT', url: '/users/b00000000000000000000003/edit', credentials: {_id: 'b00000000000000000000003'}, payload: {avatar: 'bob.com', points: 0, username: 'theBombDotCom', createdAt: 1431541042952, firebaseId: '7'}}, function(response){
+      expect(response.statusCode).to.equal(400);
+      stub.restore();
       done();
     });
   });
