@@ -14,5 +14,9 @@
     "start": "node index.js",
     "test": "lab -v -c -t 100 -L -n eslint -e test",
     "coverage": "lab -s -r lcov | coveralls"
+  },
+  "dependencies": {
+    "chai": "^2.3.0",
+    "sinon": "^1.14.1"
   }
 }
