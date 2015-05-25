@@ -43,7 +43,7 @@ describe('GET /users/{userId}', function(){
   });
 
   it('should return an existing user', function(done){
-    server.inject({method: 'GET', url: '/users/b00000000000000000000001', credentials: {_id: 'b00000000000000000000001'}}, function(response){
+    server.inject({method: 'GET', url: '/users/99', credentials: {firebaseId: '99'}}, function(response){
       expect(response.statusCode).to.equal(200);
       done();
     });
