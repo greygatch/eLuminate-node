@@ -46,6 +46,12 @@ describe('PUT /users/{userId}/edit', function(){
       done();
     });
   });
+  it('should edit an existing profile', function(done){
+    server.inject({method: 'PUT', url: '/users/b00000000000000000000003/edit', credentials: {_id: 'b00000000000000000000003'}, payload: {points: 12, createdAt: 1431541042952, firebaseId: '7'}}, function(response){
+      expect(response.statusCode).to.equal(200);
+      done();
+    });
+  });
   it('should not edit if no existing profile', function(done){
     server.inject({method: 'PUT', url: '/users/b00000000000000000000003/edit', credentials: {_id: 'b00000000000000000000099'}, payload: {avatar: 'bob.com', points: 0, username: 'theBombDotCom', createdAt: 1431541042952, firebaseId: '7'}}, function(response){
       expect(response.statusCode).to.equal(400);

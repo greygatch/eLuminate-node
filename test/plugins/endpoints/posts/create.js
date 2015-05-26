@@ -6,8 +6,7 @@ var Chai = require('chai');
 var Lab = require('lab');
 var Mongoose = require('mongoose');
 var Server = require('../../../../lib/server');
-var User = require('../../../../lib/models/user');
-var Sinon = require('sinon');
+var Post = require('../../../../lib/models/post');
 
 var lab = exports.lab = Lab.script();
 var describe = lab.experiment;
@@ -21,7 +20,7 @@ var after = lab.after;
 
 var server;
 
-describe('GET /users/{userId}', function(){
+describe('POST /posts', function(){
   before(function(done){
     Server.init(function(err, srvr){
       if(err){ throw err; }
@@ -35,30 +34,14 @@ describe('GET /users/{userId}', function(){
       done();
     });
   });
-
   after(function(done){
     server.stop(function(){
       Mongoose.disconnect(done);
     });
   });
-
-  it('should return an existing user', function(done){
-    server.inject({method: 'GET', url: '/users/99', credentials: {firebaseId: '99'}}, function(response){
+  it('should create a new post', function(done){
+    server.inject({method: 'POST', url: '/posts', credentials: {_id: '99'}, payload: {title: 'hello!!', body: 'this is a test comment!'}}, function(response){
       expect(response.statusCode).to.equal(200);
-      done();
-    });
-  });
-  it('should return null if bad credentials', function(done){
-    server.inject({method: 'GET', url: '/users/b00000000000000000000001', credentials: {_id: 'b00000000000000000000011'}}, function(response){
-      expect(response.payload).to.not.be.ok;
-      done();
-    });
-  });
-  it('should throw a db error', function(done){
-    var stub = Sinon.stub(User, 'findOne').yields(new Error());
-    server.inject({method: 'GET', url: '/users/b00000000000000000000001', credentials: {_id: 'b00000000000000000000001'}}, function(response){
-      expect(response.statusCode).to.equal(400);
-      stub.restore();
       done();
     });
   });

@@ -6,7 +6,7 @@ var Chai = require('chai');
 var Lab = require('lab');
 var Mongoose = require('mongoose');
 var Server = require('../../../../lib/server');
-var User = require('../../../../lib/models/user');
+var Post = require('../../../../lib/models/post');
 var Sinon = require('sinon');
 
 var lab = exports.lab = Lab.script();
@@ -21,7 +21,7 @@ var after = lab.after;
 
 var server;
 
-describe('GET /users/{userId}', function(){
+describe('GET /posts/{userId}', function(){
   before(function(done){
     Server.init(function(err, srvr){
       if(err){ throw err; }
@@ -35,28 +35,26 @@ describe('GET /users/{userId}', function(){
       done();
     });
   });
-
   after(function(done){
     server.stop(function(){
       Mongoose.disconnect(done);
     });
   });
-
-  it('should return an existing user', function(done){
-    server.inject({method: 'GET', url: '/users/99', credentials: {firebaseId: '99'}}, function(response){
+  it('should return post by user', function(done){
+    server.inject({method: 'GET', url: '/posts/b00000000000000000000001', credentials: {_id: 'b00000000000000000000001'}}, function(response){
       expect(response.statusCode).to.equal(200);
       done();
     });
   });
-  it('should return null if bad credentials', function(done){
-    server.inject({method: 'GET', url: '/users/b00000000000000000000001', credentials: {_id: 'b00000000000000000000011'}}, function(response){
+  it('should return an error if bad credentials', function(done){
+    server.inject({method: 'GET', url: '/posts/q00000000000000000000001', credentials: {_id: 'b00000000000000000000011'}}, function(response){
       expect(response.payload).to.not.be.ok;
       done();
     });
   });
   it('should throw a db error', function(done){
-    var stub = Sinon.stub(User, 'findOne').yields(new Error());
-    server.inject({method: 'GET', url: '/users/b00000000000000000000001', credentials: {_id: 'b00000000000000000000001'}}, function(response){
+    var stub = Sinon.stub(Post, 'findOne').yields(new Error());
+    server.inject({method: 'GET', url: '/posts/b00000000000000000000001', credentials: {_id: 'b00000000000000000000001'}}, function(response){
       expect(response.statusCode).to.equal(400);
       stub.restore();
       done();
