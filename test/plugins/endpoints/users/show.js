@@ -41,7 +41,6 @@ describe('GET /users/{userId}', function(){
       Mongoose.disconnect(done);
     });
   });
-
   it('should return an existing user', function(done){
     server.inject({method: 'GET', url: '/users/99', credentials: {firebaseId: '99'}}, function(response){
       expect(response.statusCode).to.equal(200);
