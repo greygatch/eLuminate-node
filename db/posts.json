@@ -1,0 +1,17 @@
+[
+  {
+    "userId": {"$oid": "b00000000000000000000001"},
+    "title": "test",
+    "url": "http://aaa.com",
+    "votes": 6,
+    "body": "dramalam boko nerdis ipsum lorem ranar",
+    "createdAt": {"$date": 1436541042952},
+    "_id": {"$oid": "5567c35b60ec6ed6f4f7a460"},
+    "__v": 1,
+    "comments": [{
+        "body": "good job",
+        "userId": {"$oid": "b00000000000000000000001"},
+        "votes": 12
+    }]
+  }
+]

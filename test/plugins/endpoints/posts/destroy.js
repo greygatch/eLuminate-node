@@ -21,7 +21,7 @@ var after = lab.after;
 
 var server;
 
-describe('DELETE /posts/{userId}/delete', function(){
+describe('DELETE /posts/{postId}/destroy', function(){
   before(function(done){
     Server.init(function(err, srvr){
       if(err){ throw err; }
@@ -40,24 +40,18 @@ describe('DELETE /posts/{userId}/delete', function(){
       Mongoose.disconnect(done);
     });
   });
-  // it('should return post by user', function(done){
-  //   server.inject({method: 'GET', url: '/posts/b00000000000000000000001', credentials: {_id: 'b00000000000000000000001'}}, function(response){
-  //     expect(response.statusCode).to.equal(200);
-  //     done();
-  //   });
-  // });
-  // it('should return an error if bad credentials', function(done){
-  //   server.inject({method: 'GET', url: '/posts/q00000000000000000000001', credentials: {_id: 'b00000000000000000000011'}}, function(response){
-  //     expect(response.payload).to.not.be.ok;
-  //     done();
-  //   });
-  // });
-  // it('should throw a db error', function(done){
-  //   var stub = Sinon.stub(Post, 'findOne').yields(new Error());
-  //   server.inject({method: 'GET', url: '/posts/b00000000000000000000001', credentials: {_id: 'b00000000000000000000001'}}, function(response){
-  //     expect(response.statusCode).to.equal(400);
-  //     stub.restore();
-  //     done();
-  //   });
-  // });
+  it('should return a deleted post by user', function(done){
+    server.inject({method: 'DELETE', url: '/posts/5567c35b60ec6ed6f4f7a460/destroy', credentials: {_id: 'b00000000000000000000001'}}, function(response){
+      expect(response.statusCode).to.equal(200);
+      done();
+    });
+  });
+  it('should throw a db error', function(done){
+    var stub = Sinon.stub(Post, 'findOne').yields(new Error());
+    server.inject({method: 'DELETE', url: '/posts/5567c35b60ec6ed6f4f7a460/destroy', credentials: {_id: 'b00000000000000000000001'}}, function(response){
+      expect(response.statusCode).to.equal(400);
+      stub.restore();
+      done();
+    });
+  });
 });
