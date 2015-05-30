@@ -46,11 +46,16 @@ describe('POST /users', function(){
       done();
     });
   });
-
   it('should create a new user', function(done){
     server.inject({method: 'POST', url: '/users', credentials: {firebaseId: 99}}, function(response){
       expect(response.statusCode).to.equal(200);
       expect(response.result.points).to.equal(0);
+      done();
+    });
+  });
+  it('should be unauthorized if no credentials', function(done){
+    server.inject({method: 'POST', url: '/users'}, function(response){
+      expect(response.statusCode).to.equal(401);
       done();
     });
   });

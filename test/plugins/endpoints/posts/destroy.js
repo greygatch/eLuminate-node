@@ -46,6 +46,18 @@ describe('DELETE /posts/{postId}/destroy', function(){
       done();
     });
   });
+  it('should return an error if no proper credentials', function(done){
+    server.inject({method: 'DELETE', url: '/posts/5567c35b60ec6ed6f4f7a460/destroy'}, function(response){
+      expect(response.statusCode).to.equal(401);
+      done();
+    });
+  });
+  it('should not find a non-existant post', function(done){
+    server.inject({method: 'DELETE', url: '/posts/5567c35b60ec6ed6f4f7a411/destroy', credentials: {_id: 'b00000000000000000000001'}}, function(response){
+      expect(response.statusCode).to.equal(400);
+      done();
+    });
+  });
   it('should throw a db error', function(done){
     var stub = Sinon.stub(Post, 'findOne').yields(new Error());
     server.inject({method: 'DELETE', url: '/posts/5567c35b60ec6ed6f4f7a460/destroy', credentials: {_id: 'b00000000000000000000001'}}, function(response){

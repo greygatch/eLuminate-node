@@ -42,6 +42,25 @@ describe('POST /posts', function(){
   it('should create a new post', function(done){
     server.inject({method: 'POST', url: '/posts', credentials: {_id: '99'}, payload: {title: 'hello!!', body: 'this is a test comment!'}}, function(response){
       expect(response.statusCode).to.equal(200);
+      expect(response.result.votes).to.equal(1);
+      done();
+    });
+  });
+  it('should not create a new post with short title', function(done){
+    server.inject({method: 'POST', url: '/posts', credentials: {_id: '99'}, payload: {title: 'hi', body: 'this is a test comment!'}}, function(response){
+      expect(response.statusCode).to.equal(400);
+      done();
+    });
+  });
+  it('should not create a new post with short body', function(done){
+    server.inject({method: 'POST', url: '/posts', credentials: {_id: '99'}, payload: {title: 'hello!!', body: 'test'}}, function(response){
+      expect(response.statusCode).to.equal(400);
+      done();
+    });
+  });
+  it('should not create a new post without credentials', function(done){
+    server.inject({method: 'POST', url: '/posts', payload: {title: 'hello!!', body: 'test'}}, function(response){
+      expect(response.statusCode).to.equal(401);
       done();
     });
   });

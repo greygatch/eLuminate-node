@@ -41,8 +41,26 @@ describe('PUT /posts/{postId}/edit', function(){
     });
   });
   it('should return an edited post', function(done){
-    server.inject({method: 'PUT', url: '/posts/5567c35b60ec6ed6f4f7a460/edit', credentials: {_id: 'b00000000000000000000001'}, payload: {title: 'test2', body: 'wahwahwah'}}, function(response){
+    server.inject({method: 'PUT', url: '/posts/5567c35b60ec6ed6f4f7a460/edit', credentials: {_id: 'b00000000000000000000001'}, payload: {title: 'test2', body: 'wahwahwah!!!'}}, function(response){
       expect(response.statusCode).to.equal(200);
+      done();
+    });
+  });
+  it('should return an error for short title', function(done){
+    server.inject({method: 'PUT', url: '/posts/5567c35b60ec6ed6f4f7a460/edit', credentials: {_id: 'b00000000000000000000001'}, payload: {title: 'tet', body: 'wahwahwah!!'}}, function(response){
+      expect(response.statusCode).to.equal(400);
+      done();
+    });
+  });
+  it('should return an error for short body', function(done){
+    server.inject({method: 'PUT', url: '/posts/5567c35b60ec6ed6f4f7a460/edit', credentials: {_id: 'b00000000000000000000001'}, payload: {title: 'test!', body: 'wahwahwah'}}, function(response){
+      expect(response.statusCode).to.equal(400);
+      done();
+    });
+  });
+  it('should return error if unauthorized', function(done){
+    server.inject({method: 'PUT', url: '/posts/5567c35b60ec6ed6f4f7a460/edit', payload: {title: 'test2', body: 'wahwahwah'}}, function(response){
+      expect(response.statusCode).to.equal(401);
       done();
     });
   });

@@ -53,6 +53,12 @@ describe('GET /users/{userId}', function(){
       done();
     });
   });
+  it('should return null if user does not exist', function(done){
+    server.inject({method: 'GET', url: '/users/q00000000000000000000001', credentials: {_id: 'b00000000000000000000001'}}, function(response){
+      expect(response.payload).to.not.be.ok;
+      done();
+    });
+  });
   it('should throw a db error', function(done){
     var stub = Sinon.stub(User, 'findOne').yields(new Error());
     server.inject({method: 'GET', url: '/users/b00000000000000000000001', credentials: {_id: 'b00000000000000000000001'}}, function(response){

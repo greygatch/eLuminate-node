@@ -46,8 +46,20 @@ describe('GET /posts/{postId}', function(){
       done();
     });
   });
+  it('should return error if unauthorized', function(done){
+    server.inject({method: 'GET', url: '/posts/b00000000000000000000001'}, function(response){
+      expect(response.statusCode).to.equal(401);
+      done();
+    });
+  });
   it('should return an error if bad credentials', function(done){
-    server.inject({method: 'GET', url: '/posts/q00000000000000000000001', credentials: {_id: 'b00000000000000000000011'}}, function(response){
+    server.inject({method: 'GET', url: '/posts/b00000000000000000000001', credentials: {_id: 'b00000000000000000000011'}}, function(response){
+      expect(response.payload).to.not.be.ok;
+      done();
+    });
+  });
+  it('should return an error if bad url', function(done){
+    server.inject({method: 'GET', url: '/posts/q00000000000000000000001', credentials: {_id: 'b00000000000000000000001'}}, function(response){
       expect(response.payload).to.not.be.ok;
       done();
     });
