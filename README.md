@@ -12,3 +12,4 @@
 - Mongoose
 - Hapi
 - Sinon
+- Joi
