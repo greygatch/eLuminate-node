@@ -1,5 +1,5 @@
 # eLuminate
-### News game.
+### A game that rewards you for informing yourself.
 ## BACK-END
 
 ## Testing
