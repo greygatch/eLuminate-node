@@ -1,5 +1,5 @@
 # eLuminate
-### Evan Gatchell
+### News game.
 ## BACK-END
 
 ## Testing
